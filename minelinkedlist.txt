@@ -1,0 +1,146 @@
+#include <stdio.h>
+#include <stdlib.h>
+ 
+struct node{
+    int data;
+    struct node*next;
+};
+struct node *head,*temp;
+void insertatbegin(){
+    struct node *newnode;
+    newnode = (struct node*)malloc(sizeof(struct node));
+    printf("enter the element to insert:");
+    scanf("%d",&newnode->data);
+    if(head==NULL){
+        head=newnode;
+        newnode->next=0;
+    }
+    else{
+        temp = head;
+        head=newnode;
+        newnode->next=temp;
+    }
+    
+}
+void insertatend(){
+    struct node *newnode;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    printf("enter the element to insert:");
+    scanf("%d",&newnode->data);
+    if(head==0){
+        insertatbegin();
+    }
+    else{
+        temp=head;
+        while(temp->next!=0){
+            temp=temp->next;
+        }temp->next=newnode;
+        newnode->next=0;
+    }
+}
+void insertatpos(){
+    int i,pos;
+    struct node *newnode;
+    newnode=(struct node*)malloc(sizeof(struct node));
+    printf("enter the element to insert:");
+    scanf("%d",&newnode->data);
+    printf("enter the position:");
+    scanf("%d",&pos);
+    if(head==NULL){
+        insertatbegin();
+    }
+    else{temp=head;
+        for(i=1;i<pos-1;i++){
+            temp = temp->next;
+        }
+        newnode->next=temp->next;
+        temp->next=newnode;
+    }
+    
+}
+void delatbegin()
+{
+    temp=head;
+    head=temp->next;
+    free(temp);
+}
+void delatend(){
+    struct node *prev;
+    temp=head;
+    while(temp->next!=0){
+        prev = temp;
+        temp = temp->next;
+    }
+    if(temp==head){
+        head=0;
+        free(temp);
+    }else{
+    prev->next=0;
+    free(temp);}
+}
+void delatposition(){
+    struct node *nextnode;
+    int pos,i;
+    printf("enter the position:");
+    scanf("%d",&pos);
+    temp=head;
+    for(i=1;i<pos-1;i++){
+        temp=temp->next;
+    }
+    nextnode=temp->next;
+    temp->next=nextnode->next;
+    free(nextnode);
+}
+void search(){
+    int x, i=0,f;
+    printf("enter the element to search");
+    scanf("%d",&x);
+    temp=head;
+    while(temp!=0){
+        if(temp->data==x){
+            printf("Item found at pos %d",i+1);
+            f=0;
+        }else{
+            f=1;
+            i++;
+            temp=temp->next;
+        }
+        if(f==1){
+            printf("Item not found");
+        }
+       
+    }
+}
+void display(){
+    temp=head;
+    while(temp!=0){
+        printf("%d",temp->data);
+        temp=temp->next;
+    }
+}
+int main()
+{  int choice;
+   do{
+       printf("\n1,insertatbegin \n2,insertatend\n3,insertatpos\n4,delatbegin\n5,delatend\n6,delatposition\n7,display \n:");
+       scanf("%d",&choice);
+       switch(choice){
+           case 1:insertatbegin();
+                  break;
+           case 2:insertatend();
+                  break;
+           case 3:insertatpos();
+                  break;
+           case 4:delatbegin();
+                  break;
+           case 5:delatend();
+                  break;
+           case 6:delatposition();
+                  break;
+           case 7:display();
+                  break;
+           default:printf("INVALID");
+       }
+   }while(1);
+
+    return 0;
+}
